@@ -1,15 +1,61 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Merry Christmas, maybe</title>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Merry Christmas, maybe</title>
 
-    <link href="styles.css" rel="stylesheet">
+	<link href="styles.css" rel="stylesheet">
 </head>
 <body>
-Initial commit.
+Merry Christmas <span class="eves"></span>.
+
+<script src="dayjs.min.js"></script>
+<script>
+	const [MonthDecember, DayChristmas] = [11, 25];
+
+	function getCurrentDate() {
+		const today = new Date();
+		//// Testing values
+		//const today = new Date(2023, 11, 25); // Christmas day
+		//const today = new Date(2023, 11, 26); // December but after Christmas
+
+		return {
+			currentDay: today.getDate(),
+			currentMonth: today.getMonth(),
+			currentYear: today.getFullYear()
+		}
+	}
+
+	function getDaysToNextChristmas(currentDate, nextChristmasDate) {
+		// TODO: This doesn't take leap years into account
+		const daysDiff = dayjs(currentDate).diff(nextChristmasDate, 'day');
+		return Math.abs(daysDiff);
+	}
+
+	const {currentDay, currentMonth, currentYear} = getCurrentDate();
+
+	const todayIsChristmas = currentMonth === MonthDecember && currentDay === DayChristmas;
+	console.log('todayIsChristmas', todayIsChristmas);
+
+	let yearNextChristmas;
+	if (currentMonth === MonthDecember && currentDay > DayChristmas) {
+		yearNextChristmas = currentYear + 1;
+	} else {
+		yearNextChristmas = currentYear;
+	}
+	console.log('yearNextChristmas', yearNextChristmas);
+
+	const daysToNextChristmas = getDaysToNextChristmas(
+		new Date(currentYear, currentMonth, currentDay),
+	  	new Date(yearNextChristmas, MonthDecember, DayChristmas)
+	);
+	console.log('daysToNextChristmas', daysToNextChristmas);
+
+	const daysToNextChristmasEve = daysToNextChristmas - 1;
+	console.log('daysToNextChristmasEve', daysToNextChristmasEve);
+</script>
 </body>
 </html>
