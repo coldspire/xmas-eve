@@ -10,7 +10,7 @@
 	<link href="styles.css" rel="stylesheet">
 </head>
 <body>
-Merry Christmas <span class="eves"></span>.
+Merry Christmas<span class="eves"></span>.
 
 <script src="dayjs.min.js"></script>
 <script>
@@ -30,7 +30,7 @@ Merry Christmas <span class="eves"></span>.
 	}
 
 	function getDaysToNextChristmas(currentDate, nextChristmasDate) {
-		// TODO: This doesn't take leap years into account
+		// FIXME: This doesn't take leap years into account
 		const daysDiff = dayjs(currentDate).diff(nextChristmasDate, 'day');
 		return Math.abs(daysDiff);
 	}
@@ -56,6 +56,11 @@ Merry Christmas <span class="eves"></span>.
 
 	const daysToNextChristmasEve = daysToNextChristmas - 1;
 	console.log('daysToNextChristmasEve', daysToNextChristmasEve);
+
+	const eves = Array(daysToNextChristmasEve).fill('Eve').join(' ');
+	console.log(eves);
+
+	document.querySelector('.eves').innerText = ' ' + eves;
 </script>
 </body>
 </html>
