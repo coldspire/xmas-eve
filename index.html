@@ -1,66 +1,66 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport"
-		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Merry Christmas, maybe</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Merry Christmas, maybe</title>
 
-	<link href="styles.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
 </head>
 <body>
-Merry Christmas<span class="eves"></span>.
+Merry Christmas<span class="eves"></span>!
 
 <script src="dayjs.min.js"></script>
 <script>
-	const [MonthDecember, DayChristmas] = [11, 25];
+    const [MonthDecember, DayChristmas] = [11, 25];
 
-	function getCurrentDate() {
-		const today = new Date();
-		//// Testing values
-		//const today = new Date(2023, 11, 25); // Christmas day
-		//const today = new Date(2023, 11, 26); // December but after Christmas
+    function getCurrentDate() {
+        const today = new Date();
 
-		return {
-			currentDay: today.getDate(),
-			currentMonth: today.getMonth(),
-			currentYear: today.getFullYear()
-		}
-	}
+        //// Testing values
+        //const testDate = new Date(2023, 11, 25); // Christmas day
+        //const testDate = new Date(2023, 11, 26); // December but after Christmas
 
-	function getDaysToNextChristmas(currentDate, nextChristmasDate) {
-		// FIXME: This doesn't take leap years into account
-		const daysDiff = dayjs(currentDate).diff(nextChristmasDate, 'day');
-		return Math.abs(daysDiff);
-	}
+        return {
+            currentDay: testDate?.getDate() ?? today.getDate(),
+            currentMonth: testDate?.getMonth() ?? today.getMonth(),
+            currentYear: testDate?.getFullYear() ?? today.getFullYear()
+        }
+    }
 
-	const {currentDay, currentMonth, currentYear} = getCurrentDate();
+    function getDaysToNextChristmas(currentDate, nextChristmasDate) {
+        // FIXME: This doesn't take leap years into account
+        const daysDiff = dayjs(currentDate).diff(nextChristmasDate, 'day');
+        return Math.abs(daysDiff);
+    }
 
-	const todayIsChristmas = currentMonth === MonthDecember && currentDay === DayChristmas;
-	console.log('todayIsChristmas', todayIsChristmas);
+    const {currentDay, currentMonth, currentYear} = getCurrentDate();
 
-	let yearNextChristmas;
-	if (currentMonth === MonthDecember && currentDay > DayChristmas) {
-		yearNextChristmas = currentYear + 1;
-	} else {
-		yearNextChristmas = currentYear;
-	}
-	console.log('yearNextChristmas', yearNextChristmas);
+    const todayIsChristmas = currentMonth === MonthDecember && currentDay === DayChristmas;
+    console.log('todayIsChristmas', todayIsChristmas);
 
-	const daysToNextChristmas = getDaysToNextChristmas(
-		new Date(currentYear, currentMonth, currentDay),
-	  	new Date(yearNextChristmas, MonthDecember, DayChristmas)
-	);
-	console.log('daysToNextChristmas', daysToNextChristmas);
+    if (!todayIsChristmas) {
+        let yearNextChristmas;
+        if (currentMonth === MonthDecember && currentDay > DayChristmas) {
+            yearNextChristmas = currentYear + 1;
+        } else {
+            yearNextChristmas = currentYear;
+        }
+        console.log('yearNextChristmas', yearNextChristmas);
 
-	const daysToNextChristmasEve = daysToNextChristmas - 1;
-	console.log('daysToNextChristmasEve', daysToNextChristmasEve);
+        const daysToNextChristmas = getDaysToNextChristmas(
+            new Date(currentYear, currentMonth, currentDay),
+            new Date(yearNextChristmas, MonthDecember, DayChristmas)
+        );
+        console.log('daysToNextChristmas', daysToNextChristmas);
 
-	const eves = Array(daysToNextChristmasEve).fill('Eve').join(' ');
-	console.log(eves);
+        const eves = Array(daysToNextChristmas).fill('Eve').join(' ');
+        console.log(eves);
 
-	document.querySelector('.eves').innerText = ' ' + eves;
+        document.querySelector('.eves').innerText = ' ' + eves;
+    }
 </script>
 </body>
 </html>
